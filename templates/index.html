@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Дом молодёжи</title>
+</head>
+<body background="{{ url_for('static', filename='img/fon.jpg') }}">
+<div class="wrapper">
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+
+                    </svg>
+                </a>
+                <a href="/" class="btn btn-outline-light me-2">Главная</a>
+                <a href="/about" class="btn btn-outline-light me-2">О нас</a>
+                <a href="/comment" class="btn btn-outline-light me-2">Оставить отзыв</a>
+                <div class="to-right"><a href="/admin" class="btn btn-outline-light me-2">Войти</a></div>
+
+
+            </div>
+        </div>
+    </header>
+
+    {% if hall == 'False' %}
+
+    <div class="content">
+        <div class="about">
+
+            <div class="dom-text">
+                <img class="dom" src="{{ url_for('static', filename='img/Дом Молодёжи.jpg') }}" alt="#">
+                <p class="text">
+                    Змейка - это игра для тех, кто имел телефон в 2000-ых ну или просто играл на телефоне в
+                    популярную игру змейку на тетрисе или родительском гаджете. В данном приложении собраны самые
+                    популярные
+                    змейки из тетриса, приставок и популярного на то время телефона Nokia. Если Вы хотите поиграть и
+                    вспомнить былое, просто скачивайте приложение Змейка на свое Android устройство. Ну а если Вы еще ни
+                    разу не играли в подобную игру, то скачать нужно обязательно и попробовать, ведь Вас это очень
+                    удивит и
+                    Вы сможете увидеть во что играли Ваши старшие братья или сестры. А самое главное, в игре Змейка есть
+                    несколько режимов и несколько игр, поэтому скучать не придется, это точно. Та же графика, та же
+                    физика,
+                    тот же смысл. Ничего не изменили, все осталось так как и было.
+                </p></div>
+        </div>
+        <div class="halls">
+            <h2 style="margin: 0 auto; margin-top: 15px; width: 50px; ">Залы</h2>
+            {% for hall in halls %}
+            <div class="hall">
+                <img class="img-hall" src="{{ hall['url'] }}" alt="">
+                <div class="column">
+                    <h3>{{ hall['hall'] }}</h3>
+                    <p class="about-hall" style="margin-bottom: 50px">{{ hall['about'] }}</p>
+                    <div class="dropdown">
+                        <form>
+                            <button value="{{ hall['i'] }}" name="b" formmethod="post" class="btn btn-grad">
+                                Забронировать
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+
+{% else %}
+<h2 style="margin: 10px;">{{ hall['hall'] }}</h2>
+<img src="{{ hall['url'] }}" alt="">
+<div class="about_hall">
+    <p>{{ hall['about'] }}</p>
+    <p>Площадь помещения: {{ hall['S'] }} м2</p>
+    <p>Максимальная вместительность: {{ hall['вместительность'] }} человек</p>
+    <p>{{ hall['for'] }}</p>
+</div>
+
+<form class="form-group">
+    <input name="hall" type="text" value="{{ hall['i'] }}"
+           style="width: 0px; height: 0px; color: #00000000; background: #00000000; border: 0px solid #00000000; padding: 0px;">
+    <div class="input-group mb-3">
+        <span class="input-group-text">Имя и фамилия</span>
+        <input name="name" type="text" aria-label="Имя" class="form-control">
+        <input name="surname" type="text" aria-label="Фамилия" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Email</span>
+        <input name="email" type="email" class="form-control">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Номер телефона</span>
+        <input name="num" class="form-control" type="tel">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Название события</span>
+        <input name="ev_name" class="form-control" type="text">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Тип события</span>
+        <input name="type" class="form-control" type="text">
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Дата начала и конца</span>
+        <input type="date" name="start" class="form-control"
+               value="{{ date['datenow'] }}">
+        <input type="date" name="end" class="form-control"
+               value="{{ date['datenow'] }}">
+    </div>
+
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Описание события</span>
+        <textarea class="form-control" aria-label="Описание события"></textarea>
+    </div>
+    <div class="input-group mb-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Выберете оборудование
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Стул</span>
+                    <input value="0" min="0" max="{{ hall['стул'] }}" name="стул" class="form-control" type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Стол</span>
+                    <input value="0" min="0" max="{{ hall['стол'] }}" name="стол" class="form-control" type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">ТВ LG со стойками</span>
+                    <input value="0" min="0" max="{{ hall['Телевизор'] }}" name="Телевизор" class="form-control"
+                           type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Диван 2х местный</span>
+                    <input value="0" min="0" max="{{ hall['диван'] }}" name="диван" class="form-control" type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Стул барный</span>
+                    <input value="0" min="0" max="{{ hall['стул-барный'] }}" name="стул-барный" class="form-control"
+                           type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Колонки со стойками</span>
+                    <input value="0" min="0" max="{{ hall['колонки'] }}" name="колонки" class="form-control"
+                           type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Вешалка</span>
+                    <input value="0" min="0" max="{{ hall['вешалка'] }}" name="вешалка" class="form-control"
+                           type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Базовая станция радио Микрофона</span>
+                    <input value="0" min="0" max="{{ hall['стойка-под-микро'] }}" name="стойка-под-микро"
+                           class="form-control" type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Микшер</span>
+                    <input value="0" min="0" max="{{ hall['микшер'] }}" name="микшер" class="form-control"
+                           type="number">
+                </div>
+            </li>
+            <li>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Журнальный стол</span>
+                    <input value="0" min="0" max="{{ hall['стол-журнальный'] }}" name="стол-журнальный"
+                           class="form-control" type="number">
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <button formmethod="post" type="submit" class="btn btn-primary" name="10" value="6" style="margin: 5px;">Отправить
+    </button>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+</form>
+
+{% endif %}
+
+
+</body>
+</html>

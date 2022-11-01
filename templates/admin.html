@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Дом молодёжи</title>
+</head>
+<body style="background: #EEE;">
+<div class="login">
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+                <a href="/" class="btn btn-outline-light me-2">Главныя</a>
+                <a href="/about" class="btn btn-outline-light me-2">О нас</a>
+                <a href="/comment" class="btn btn-outline-light me-2">Оставить отзыв</a>
+                <div class="to-right"><a href="/login" class="btn btn-outline-light me-2">Войти</a></div>
+
+
+            </div>
+        </div>
+    </header>
+    {% if not is_admin %}
+    <div class="content">
+        <div class="form-group-login">
+            <form>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Example label</label>
+                    <input name="log" type="text" class="form-control" id="formGroupExampleInput"
+                           placeholder="Login">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
+                    <input name="pas" type="password" class="form-control" id="formGroupExampleInput2"
+                           placeholder="Password">
+                </div>
+                <button name="button" value="0" formmethod="post" type="submit" class="btn btn-primary"
+                        style="margin: 5px;">Войти
+                </button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="content-table">
+        {% for ord in orders %}
+        {% if not ord[13] %}
+        <div class="ord">
+            <div class="str1" style="display: flex;">
+                <h5>{{ ord[1] }}</h5>
+                <h5>{{ ord[3] }}</h5>
+                <h5>{{ ord[2] }}</h5>
+                <h5>{{ ord[12] }}</h5>
+
+            </div>
+            <div class="str2" style="display: flex;">
+                <h5>{{ ord[6] }}</h5>
+                <h5>{{ ord[7] }}</h5>
+                <h5>{{ ord[8] }}</h5>
+            </div>
+            <div class="str3" style="display: flex;">
+                <h5>{{ ord[4] }}</h5>
+                <h5>{{ ord[5] }}</h5>
+            </div>
+            <div class="str4">
+                <p>{{ ord[10] }}</p>
+            </div>
+            <div class="str5">
+                <p>{{ ord[9] }}</p>
+            </div>
+            <div class="str6">
+                <p>{{ ord[11] }}</p>
+            </div>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        1 из 3
+                    </div>
+                    <div class="col-6">
+                        2 из 3 (шире)
+                    </div>
+                    <div class="col">
+                        3 из 3
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        1 из 3
+                    </div>
+                    <div class="col-5">
+                        2 из 3 (шире)
+                    </div>
+                    <div class="col">
+                        3 из 3
+                    </div>
+                </div>
+            </div>
+            <form>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="rb" id="flexRadioDefault1"
+                           value="{{ ord[0] }}-0">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Отклонить
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="rb" id="flexRadioDefault2" value="{{ ord[0] }}-1"
+                           checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Одобрить
+                    </label>
+                </div>
+                <div class="text-area">
+                    <label for="comment">Комментарий</label>
+                    <textarea name="comment" id="comment" cols="57"
+                              rows="6"></textarea>
+                </div>
+                <button name="button" value="1" formmethod="post" type="submit" class="btn btn-primary"
+                        style="margin: 5px;">Отправить
+                </button>
+            </form>
+        </div>
+
+        <br>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
